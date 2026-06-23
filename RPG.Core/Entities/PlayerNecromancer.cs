@@ -7,10 +7,10 @@ public class PlayerNecromancer : Character
         MaxHitpoints = 100;
         CurrentHitpoints = MaxHitpoints;
         Agility = 2;
-        Intelligence = 8;
+        Intelligence = 11;
         Strength = 1;
         Vitality = 3;
-        Charisma = 1;
+        Charisma = 3;
     }
 
     
