@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/declan/RPG.Core/RPG.Core.csproj",
+      "projectUniqueName": "/home/declan/VTTProject/RPG.Core/RPG.Core.csproj",
       "projectName": "RPG.Core",
-      "projectPath": "/home/declan/RPG.Core/RPG.Core.csproj",
+      "projectPath": "/home/declan/VTTProject/RPG.Core/RPG.Core.csproj",
       "packagesPath": "/home/declan/.nuget/packages/",
-      "outputPath": "/home/declan/RPG.Core/obj/",
+      "outputPath": "/home/declan/VTTProject/RPG.Core/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/declan/.nuget/NuGet/NuGet.Config"

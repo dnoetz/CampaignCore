@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/declan/RPG.Infrastructure/RPG.Infrastructure.csproj",
+      "projectUniqueName": "/home/declan/VTTProject/RPG.Infrastructure/RPG.Infrastructure.csproj",
       "projectName": "RPG.Infrastructure",
-      "projectPath": "/home/declan/RPG.Infrastructure/RPG.Infrastructure.csproj",
+      "projectPath": "/home/declan/VTTProject/RPG.Infrastructure/RPG.Infrastructure.csproj",
       "packagesPath": "/home/declan/.nuget/packages/",
-      "outputPath": "/home/declan/RPG.Infrastructure/obj/",
+      "outputPath": "/home/declan/VTTProject/RPG.Infrastructure/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/declan/.nuget/NuGet/NuGet.Config"

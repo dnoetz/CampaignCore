@@ -7,11 +7,6 @@ public class Goblin : Monster
         MaxHitpoints = 75;
         CurrentHitpoints = MaxHitpoints;
         ExperienceAwarded = 2;
-        
     }
 
-    public int Stab()
-    {
-        return 25;
-    }
 }
