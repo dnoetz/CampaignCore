@@ -25,9 +25,15 @@ public class PlayerNecromancer : Character
         UndeadRaised = 0;
     }
 
-    public override int DealDamage()
+    public override int DealDamage(string abilityName)
     {
-        return Abilities[1].Execute(this);
+        var ability = Abilities.Find(x => x.Name == abilityName);
+        if (ability == null)
+        {
+            return Abilities[0].Execute(this);
+        }
+        Console.WriteLine($"Using {ability.Name}");
+        return ability.Execute(this);
     }
 
     public void RaiseUndead()

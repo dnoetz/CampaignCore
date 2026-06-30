@@ -14,7 +14,7 @@ public class PlayerRogue : Character
         Charisma = 4;
     }
 
-    public override int DealDamage()
+    public override int DealDamage(string abilityName)
     {
         return 40;
     }

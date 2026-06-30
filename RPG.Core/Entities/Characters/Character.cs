@@ -63,6 +63,6 @@ public abstract class Character
         Charisma += addChr;
     }
 
-    public abstract int DealDamage();
+    public abstract int DealDamage(string abilityName);
 
 }
