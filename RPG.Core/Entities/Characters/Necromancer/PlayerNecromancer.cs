@@ -27,7 +27,7 @@ public class PlayerNecromancer : Character
 
     public override int DealDamage(string abilityName)
     {
-        var ability = Abilities.Find(x => x.Name == abilityName);
+        var ability = Abilities.Find(x => x.ReferenceName == abilityName);
         if (ability == null)
         {
             return Abilities[0].Execute(this);
