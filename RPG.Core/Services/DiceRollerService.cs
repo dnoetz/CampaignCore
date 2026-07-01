@@ -10,12 +10,12 @@ public class DiceRollerService
     }
 
 
-    public int Roll20()
+    public virtual int Roll20()
     {
         return _dice.Next(21);
     }
 
-    public int Roll6()
+    public virtual int Roll6()
     {
         return _dice.Next(7);
     }

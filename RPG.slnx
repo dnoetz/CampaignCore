@@ -3,4 +3,5 @@
   <Project Path="RPG.ConsoleTest/RPG.ConsoleTest.csproj" />
   <Project Path="RPG.Core/RPG.Core.csproj" />
   <Project Path="RPG.Infrastructure/RPG.Infrastructure.csproj" />
+  <Project Path="RPG.Tests/RPG.Tests.csproj" />
 </Solution>
