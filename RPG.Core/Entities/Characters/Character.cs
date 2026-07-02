@@ -1,3 +1,4 @@
+using RPG.Core.Entities.Campaigns;
 using RPG.Core.Interfaces;
 
 namespace RPG.Core.Entities.Characters;
@@ -17,6 +18,10 @@ public abstract class Character
     public int Charisma { get; protected set; }
     public abstract int MainStat { get; }
     public bool IsDead { get; protected set; } = false;
+    
+    public User Player { get; set; }
+    public int? CampaignId { get; set; }
+    public Campaign Campaign { get; set; }
 
     protected Character(string name)
     {
