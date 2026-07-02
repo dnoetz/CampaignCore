@@ -4,7 +4,7 @@ A modular, turn-based RPG system built with .NET, designed to demonstrate clean 
 
 ## Project Status
 
-**Active Development.** The core combat system is functional. Current focus is on expanding the combat loop, creating campaign hosting capabilities, and building out the API layer.
+**Active Development.** The core combat system is functional. Current focus is on building out infrastructure, creating campaign hosting capabilities, and building the API.
 
 ## Features
 
@@ -18,8 +18,8 @@ A modular, turn-based RPG system built with .NET, designed to demonstrate clean 
 - **.NET 10** - Core framework
 - **C#** - Primary language
 - **xUnit & Moq** - Testing
-- **PostgreSQL** - Database (planned)
-- **Entity Framework Core** - ORM (planned)
+- **PostgreSQL** - Database
+- **Entity Framework Core** - ORM
 - **React** - Frontend (planned)
 
 ## Architecture
