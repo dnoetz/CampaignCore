@@ -1,9 +1,14 @@
 using DotNetEnv.Configuration;
+using Microsoft.EntityFrameworkCore;
+using RPG.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddDotNetEnv(".env");
 // Add services to the container.
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
