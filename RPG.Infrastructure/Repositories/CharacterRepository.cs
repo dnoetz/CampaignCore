@@ -25,7 +25,8 @@ public class CharacterRepository : ICharacterRepository
     public async Task<IEnumerable<Character>> GetAllByUserAsync(int userId)
     {
         return await _context.Characters
-            .Where(c => c.Player.Id == userId)    
+            .Where(c => c.Player.Id == userId)
+            .Include(c => c.Campaign)
             .ToListAsync();
     }
 
@@ -33,6 +34,7 @@ public class CharacterRepository : ICharacterRepository
     {
         return await _context.Characters
             .Where(c => c.CampaignId == campaignId)
+            .Include(c => c.Player)
             .ToListAsync();
     }
 
