@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using RPG.Core.Entities.Campaigns;
+using RPG.Core.Interfaces.Repositories;
 using RPG.Infrastructure.Data;
 
 namespace RPG.Infrastructure.Repositories;
 
-public class CampaignActionRepository
+public class CampaignActionRepository : ICampaignActionRepository
 {
     private readonly AppDbContext _context;
 
