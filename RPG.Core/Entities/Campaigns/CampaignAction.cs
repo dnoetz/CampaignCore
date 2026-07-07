@@ -7,7 +7,7 @@ public class CampaignAction
 {
     public int Id { get; set; }
     public string Narrative { get; set; }
-    public User Actor { get; set; }
+    public Character Actor { get; set; }
     public ActionType ActionType { get; set; }
     public string Result { get; set; }
     public DateTime Timestamp { get; set; }
