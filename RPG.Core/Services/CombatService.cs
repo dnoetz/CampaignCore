@@ -13,19 +13,19 @@ public class CombatService
     private readonly ExperienceService _exp;
     private readonly ICharacterRepository _character;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ICampaignActionRepository _campaignAction;
+    private readonly ActionLoggerService _actionLogger;
     public CombatService(
         DamageCalculatorService damage,
         ExperienceService exp,
         ICharacterRepository character,
         IUnitOfWork unitOfWork,
-        ICampaignActionRepository campaignAction)
+        ActionLoggerService actionLogger)
     {
         _damage = damage;
         _exp = exp;
         _character = character;
         _unitOfWork = unitOfWork;
-        _campaignAction = campaignAction;
+        _actionLogger = actionLogger;
     }
 
     public async Task ExecuteCombatTurn(
@@ -36,15 +36,6 @@ public class CombatService
         int roll, 
         string narrative)
     {
-        var action = new CampaignAction()
-        {
-            Narrative = narrative,
-            Actor = player,
-            ActionType = ActionType.Combat,
-            Timestamp = DateTime.UtcNow,
-            CampaignId = player.CampaignId ?? throw new InvalidOperationException($"{player.Name} is not connected to a campaign!")
-        };
-
         string result;
         if (initiative > 5)
         {
@@ -72,10 +63,7 @@ public class CombatService
             _exp.AwardExp(player, enemy);
         }
 
-        
-        action.Result = result;
-
-        await _campaignAction.AddAsync(action);
+        await _actionLogger.LogAction(narrative, player, ActionType.Combat, result);
         await _character.UpdateAsync(player);
         await _unitOfWork.CompleteAsync();
     }
