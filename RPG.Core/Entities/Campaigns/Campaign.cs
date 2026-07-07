@@ -9,4 +9,5 @@ public class Campaign
     public User Owner { get; set; }
     public List<Character> Characters { get; set; } = new();
     public List<CampaignAction> CampaignActions { get; set; } = new();
+    public string CampaignCode { get; set; }
 }
