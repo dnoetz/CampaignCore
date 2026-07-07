@@ -47,4 +47,12 @@ public class CampaignRepository : ICampaignRepository
             _context.Campaigns.Remove(campaign);
         }
     }
+
+    public async Task<bool> CodeExistsAsync(string code)
+    {
+        var codeExists = await _context.Campaigns
+            .AnyAsync(cc => cc.CampaignCode == code);
+
+        return codeExists;
+    }
 }

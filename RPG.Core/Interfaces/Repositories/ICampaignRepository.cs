@@ -9,4 +9,5 @@ public interface ICampaignRepository
     Task AddAsync(Campaign campaign);
     Task UpdateAsync(Campaign campaign);
     Task DeleteAsync(int id);
+    Task<bool> CodeExistsAsync(string code);
 }
