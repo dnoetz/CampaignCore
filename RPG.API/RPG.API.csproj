@@ -20,6 +20,9 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="DTOs\CampaignAction\" />
+    <Folder Include="DTOs\Campaign\" />
+    <Folder Include="DTOs\User\" />
   </ItemGroup>
 
   <ItemGroup>
