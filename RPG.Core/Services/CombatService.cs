@@ -1,37 +1,39 @@
 using RPG.Core.Entities.Characters;
 using RPG.Core.Entities.Monsters;
+using RPG.Core.Interfaces;
+using RPG.Core.Interfaces.Repositories;
 
 namespace RPG.Core.Services;
 
 public class CombatService
 {
-    private readonly DiceRollerService _roller;
     private readonly DamageCalculatorService _damage;
     private readonly ExperienceService _exp;
-    public CombatService()
+    private readonly ICharacterRepository _character;
+    private readonly IUnitOfWork _unitOfWork;
+    public CombatService(
+        DamageCalculatorService damage,
+        ExperienceService exp,
+        ICharacterRepository character,
+        IUnitOfWork unitOfWork)
     {
-        _roller = new DiceRollerService();
-        _damage = new DamageCalculatorService(_roller);
-        _exp = new ExperienceService();
+        _damage = damage;
+        _exp = exp;
+        _character = character;
+        _unitOfWork = unitOfWork;
     }
 
-    public void ExecuteCombatTurn(Character player, Monster enemy, string abilityName, int initiative, int roll)
+    public async Task ExecuteCombatTurn(Character player, Monster enemy, string abilityName, int initiative, int roll)
     {
         if (initiative > 5)
         {
             if (roll == 6)
             {
-                //crit var for testing, remove and place logic into TakeDamage() later
-                int crit = _damage.CalculateCriticalDamage(player, abilityName);
-                enemy.TakeDamage(crit);
-                //console.WriteLine below for testing, remove later
-                Console.WriteLine($"Critical hit for {crit} damage!");
+                enemy.TakeDamage(_damage.CalculateCriticalDamage(player, abilityName));
             }
             else
             {
-                int damage = _damage.CalculateDamage(player, roll, abilityName);
-                enemy.TakeDamage(damage);
-                Console.WriteLine($"Hit for {damage} damage!");
+                enemy.TakeDamage(_damage.CalculateDamage(player, roll, abilityName));
             }
         }
         else
@@ -46,5 +48,8 @@ public class CombatService
                 player.LevelUp(30, 2, 2, 2, 2, 2);
             }
         }
+
+        await _character.UpdateAsync(player);
+        await _unitOfWork.CompleteAsync();
     }
 }
