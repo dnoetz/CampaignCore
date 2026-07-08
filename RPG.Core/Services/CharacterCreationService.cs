@@ -41,11 +41,10 @@ public class CharacterCreationService
             stats["Strength"],
             stats["Vitality"],
             stats["Charisma"],
-            playerClass,
-            user,
-            campaign
-            );
+            playerClass);
 
+        character.Player = user;
+        character.Campaign = campaign;
         await _characterRepository.AddAsync(character);
         return character;
     }

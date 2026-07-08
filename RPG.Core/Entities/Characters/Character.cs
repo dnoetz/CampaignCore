@@ -33,9 +33,7 @@ public class Character
         int strength,
         int vitality,
         int charisma,
-        PlayableClasses playerClass,
-        User player,
-        Campaign campaign)
+        PlayableClasses playerClass)
     {
         Name = name;
         Level = 1;
@@ -50,8 +48,6 @@ public class Character
         PlayerClass = playerClass;
         //revisit main stat functionality after complete character refactor
         MainStat = 10;
-        Player = player;
-        Campaign = campaign;
     }
 
     public void TakeDamage(int damage)
