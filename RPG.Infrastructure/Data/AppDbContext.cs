@@ -12,7 +12,6 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<Character> Characters { get; set; }
-    public DbSet<PlayerNecromancer> Necromancers { get; set; }
     public DbSet<Campaign> Campaigns { get; set; }
     public DbSet<CampaignAction> CampaignActions { get; set; }
     public DbSet<User> Users { get; set; }
