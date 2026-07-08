@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\Characters\Rogue\" />
+    <Folder Include="Entities\Characters\Warrior\" />
+    <Folder Include="Entities\Characters\Wizard\" />
+  </ItemGroup>
+
 </Project>
