@@ -59,11 +59,11 @@ public class CampaignService
     public async Task AddCharacterToCampaign(
         PlayableClasses playerClass,
         string name,
-        Campaign campaign,
         User user,
         string sharedCampaignCode)
     {
-        await _characterCreation.CreateCharacter(playerClass, name, campaign, user, sharedCampaignCode);
+        var campaign = await _campaign.GetByCodeAsync(sharedCampaignCode);
+        await _characterCreation.CreateCharacter(playerClass, name, campaign, user);
         await _unitOfWork.CompleteAsync();
     }
 }

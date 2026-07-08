@@ -20,13 +20,8 @@ public class CharacterCreationService
         PlayableClasses playerClass,
         string name,
         Campaign campaign,
-        User user,
-        string sharedCampaignCode)
+        User user)
     {
-        if (sharedCampaignCode != campaign.CampaignCode)
-        {
-            throw new InvalidOperationException("Invalid campaign code!");
-        }
         
         Dictionary<string, int> stats;
         switch (playerClass)

@@ -55,4 +55,11 @@ public class CampaignRepository : ICampaignRepository
 
         return codeExists;
     }
+
+    public async Task<Campaign> GetByCodeAsync(string code)
+    {
+        return await _context.Campaigns
+                   .FirstOrDefaultAsync(c => c.CampaignCode == code) ??
+               throw new InvalidOperationException("Campaign could not be found");
+    }
 }
