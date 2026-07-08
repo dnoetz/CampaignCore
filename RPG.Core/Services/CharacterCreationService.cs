@@ -46,6 +46,7 @@ public class CharacterCreationService
             stats["Strength"],
             stats["Vitality"],
             stats["Charisma"],
+            playerClass,
             user,
             campaign
             );

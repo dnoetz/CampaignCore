@@ -1,24 +1,37 @@
 using RPG.Core.Entities.Characters;
+using RPG.Core.Interfaces;
 
 namespace RPG.Core.Services;
 
 public class DamageCalculatorService
 {
-    private readonly DiceRollerService _roller;
+    private readonly IAbilityProvider _abilityProvider;
 
-    public DamageCalculatorService(DiceRollerService roller)
+    public DamageCalculatorService(IAbilityProvider abilityProvider)
     {
-        _roller = roller;
+        _abilityProvider = abilityProvider;
     }
 
     public int CalculateCriticalDamage(Character player, string abilityName)
     {
-        return Convert.ToInt32(player.DealDamage(abilityName) * 1.5);
+        var abilities = _abilityProvider.GetAbilitiesForClass(player.PlayerClass);
+        var ability = abilities.FirstOrDefault(a => a.ReferenceName == abilityName);
+        if (ability == null)
+        {
+            throw new InvalidOperationException("Ability not found!");
+        }
+        return Convert.ToInt32(ability.Execute(player) * 1.5);
     }
 
     public int CalculateDamage(Character player, int rollValue, string abilityName)
     {
-        return player.DealDamage(abilityName) + (rollValue);
+        var abilities = _abilityProvider.GetAbilitiesForClass(player.PlayerClass);
+        var ability = abilities.FirstOrDefault(a => a.ReferenceName == abilityName);
+        if (ability == null)
+        {
+            throw new InvalidOperationException("Ability not found!");
+        }
+        return ability.Execute(player) + (rollValue);
     }
 
 

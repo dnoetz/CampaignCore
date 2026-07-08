@@ -1,6 +1,9 @@
 using DotNetEnv.Configuration;
 using Microsoft.EntityFrameworkCore;
 using RPG.Core.Entities;
+using RPG.Core.Entities.Characters.Necromancer;
+using RPG.Core.Enums;
+using RPG.Core.Interfaces;
 using RPG.Core.Interfaces.Repositories;
 using RPG.Infrastructure.Data;
 using RPG.Infrastructure.Repositories;
@@ -19,6 +22,11 @@ builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICampaignActionRepository, CampaignActionRepository>();
 builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
+builder.Services.AddScoped<IAbilityProvider, AbilityProvider>();
+
+builder.Services.AddKeyedScoped<ICombatAbility, AbilityNecrosis>(PlayableClasses.Necromancer);
+builder.Services.AddKeyedScoped<ICombatAbility, AbilityReapersMark>(PlayableClasses.Necromancer);
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

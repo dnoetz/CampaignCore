@@ -14,11 +14,6 @@ public class AbilityReapersMark : ICombatAbility
 
     public int Execute(Character player)
     {
-        if (player is PlayerNecromancer necromancer)
-        {
-            return BaseDamage * necromancer.UndeadRaised + necromancer.MainStat;
-        }
-
-        return 0;
+        return (BaseDamage * 2) + player.MainStat;
     }
 }

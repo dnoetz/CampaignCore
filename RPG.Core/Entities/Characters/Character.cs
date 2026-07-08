@@ -1,5 +1,6 @@
 using RPG.Core.Entities.Campaigns;
 using RPG.Core.Enums;
+using RPG.Core.Interfaces;
 
 namespace RPG.Core.Entities.Characters;
 
@@ -18,6 +19,7 @@ public class Character
     public int Charisma { get; protected set; }
     public int MainStat { get; protected set; } 
     public bool IsDead { get; protected set; } = false;
+    public PlayableClasses PlayerClass { get; set; }
     
     public User Player { get; set; }
     public int? CampaignId { get; set; }
@@ -31,6 +33,7 @@ public class Character
         int strength,
         int vitality,
         int charisma,
+        PlayableClasses playerClass,
         User player,
         Campaign campaign)
     {
@@ -44,6 +47,7 @@ public class Character
         Strength = strength;
         Vitality = vitality;
         Charisma = charisma;
+        PlayerClass = playerClass;
         //revisit main stat functionality after complete character refactor
         MainStat = 10;
         Player = player;
@@ -74,7 +78,6 @@ public class Character
         ExperienceToLevel -= exp;
     }
 
-
     public void LevelUp(int addMaxHP = 0, int addAgi = 0, int addInt = 0, int addStr = 0, int addVit = 0, int addChr = 0)
     {
         Level++;
@@ -87,13 +90,4 @@ public class Character
         Vitality += addVit;
         Charisma += addChr;
     }
-
-    public int DealDamage(string abilityName, PlayableClasses playerClass)
-    {
-        switch (playerClass)
-        {
-            
-        }
-    }
-
 }
