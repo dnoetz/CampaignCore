@@ -1,9 +1,9 @@
 using RPG.Core.Entities.Campaigns;
-using RPG.Core.Interfaces;
+using RPG.Core.Enums;
 
 namespace RPG.Core.Entities.Characters;
 
-public abstract class Character
+public class Character
 {
     public int Id { get; protected set; }
     public string Name { get; protected set; }
@@ -16,18 +16,38 @@ public abstract class Character
     public int Strength { get; protected set; }
     public int Vitality { get; protected set; }
     public int Charisma { get; protected set; }
-    public abstract int MainStat { get; }
+    public int MainStat { get; protected set; } 
     public bool IsDead { get; protected set; } = false;
     
     public User Player { get; set; }
     public int? CampaignId { get; set; }
     public Campaign Campaign { get; set; }
 
-    protected Character(string name)
+    public Character(
+        string name, 
+        int maxHitpoints,
+        int agility,
+        int intelligence,
+        int strength,
+        int vitality,
+        int charisma,
+        User player,
+        Campaign campaign)
     {
         Name = name;
         Level = 1;
         ExperienceToLevel = 10;
+        MaxHitpoints = maxHitpoints;
+        CurrentHitpoints = maxHitpoints;
+        Agility = agility;
+        Intelligence = intelligence;
+        Strength = strength;
+        Vitality = vitality;
+        Charisma = charisma;
+        //revisit main stat functionality after complete character refactor
+        MainStat = 10;
+        Player = player;
+        Campaign = campaign;
     }
 
     public void TakeDamage(int damage)
@@ -68,6 +88,12 @@ public abstract class Character
         Charisma += addChr;
     }
 
-    public abstract int DealDamage(string abilityName);
+    public int DealDamage(string abilityName, PlayableClasses playerClass)
+    {
+        switch (playerClass)
+        {
+            
+        }
+    }
 
 }
