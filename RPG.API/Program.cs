@@ -5,6 +5,7 @@ using RPG.Core.Entities.Characters.Necromancer;
 using RPG.Core.Enums;
 using RPG.Core.Interfaces;
 using RPG.Core.Interfaces.Repositories;
+using RPG.Core.Services;
 using RPG.Infrastructure.Data;
 using RPG.Infrastructure.Repositories;
 
@@ -23,6 +24,14 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICampaignActionRepository, CampaignActionRepository>();
 builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 builder.Services.AddScoped<IAbilityProvider, AbilityProvider>();
+builder.Services.AddScoped<ActionLoggerService>();
+builder.Services.AddScoped<CampaignCodeService>();
+builder.Services.AddScoped<CampaignService>();
+builder.Services.AddScoped<CharacterCreationService>();
+builder.Services.AddScoped<CombatService>();
+builder.Services.AddScoped<DamageCalculatorService>();
+builder.Services.AddScoped<DiceRollerService>();
+builder.Services.AddScoped<ExperienceService>();
 
 builder.Services.AddKeyedScoped<ICombatAbility, AbilityNecrosis>(PlayableClasses.Necromancer);
 builder.Services.AddKeyedScoped<ICombatAbility, AbilityReapersMark>(PlayableClasses.Necromancer);
