@@ -104,7 +104,7 @@ public class CampaignsController : ControllerBase
     [HttpDelete("{campaignId}")]
     public async Task<ActionResult> DeleteCampaignAsync(int campaignId)
     {
-        await _campaignRepository.DeleteAsync(campaignId);
+        await _campaignService.DeleteCampaignAsync(campaignId);
         
         return NoContent();
     }

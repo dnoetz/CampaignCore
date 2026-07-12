@@ -10,18 +10,18 @@ namespace RPG.Core.Services;
 public class CampaignService
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly CharacterCreationService _characterCreation;
+    private readonly CharacterService _characterService;
     private readonly ICampaignRepository _campaign;
     private readonly CampaignCodeService _campaignCode;
 
     public CampaignService(
         IUnitOfWork unitOfWork,
-        CharacterCreationService characterCreation,
+        CharacterService characterService,
         ICampaignRepository campaign,
         CampaignCodeService campaignCode)
     {
         _unitOfWork = unitOfWork;
-        _characterCreation = characterCreation;
+        _characterService = characterService;
         _campaign = campaign;
         _campaignCode = campaignCode;
     }
@@ -63,7 +63,13 @@ public class CampaignService
         string sharedCampaignCode)
     {
         var campaign = await _campaign.GetByCodeAsync(sharedCampaignCode);
-        await _characterCreation.CreateCharacter(playerClass, name, campaign, user);
+        await _characterService.CreateCharacter(playerClass, name, campaign, user);
+        await _unitOfWork.CompleteAsync();
+    }
+    
+    public async Task DeleteCampaignAsync(int campaignId)
+    {
+        await _campaign.DeleteAsync(campaignId);
         await _unitOfWork.CompleteAsync();
     }
 }
