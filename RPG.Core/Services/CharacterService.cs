@@ -7,13 +7,15 @@ using RPG.Core.Interfaces.Repositories;
 
 namespace RPG.Core.Services;
 
-public class CharacterCreationService
+public class CharacterService
 {
     private readonly ICharacterRepository _characterRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CharacterCreationService(ICharacterRepository characterRepository)
+    public CharacterService(ICharacterRepository characterRepository, IUnitOfWork unitOfWork)
     {
         _characterRepository = characterRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Character> CreateCharacter(
@@ -47,5 +49,11 @@ public class CharacterCreationService
         character.Campaign = campaign;
         await _characterRepository.AddAsync(character);
         return character;
+    }
+    
+    public async Task DeleteCharacterAsync(int characterId)
+    {
+        await _characterRepository.DeleteAsync(characterId);
+        await _unitOfWork.CompleteAsync();
     }
 }

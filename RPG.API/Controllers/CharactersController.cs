@@ -10,10 +10,12 @@ namespace RPG.API.Controllers;
 public class CharactersController : ControllerBase
 {
     private readonly ICharacterRepository _characterRepository;
+    private readonly CharacterService _characterService;
 
-    public CharactersController(ICharacterRepository characterRepository)
+    public CharactersController(ICharacterRepository characterRepository, CharacterService characterService)
     {
         _characterRepository = characterRepository;
+        _characterService = characterService;
     }
 
     [HttpGet("{characterId}")]
@@ -49,7 +51,7 @@ public class CharactersController : ControllerBase
     [HttpDelete("{characterId}")]
     public async Task<ActionResult> DeleteAsync(int characterId)
     {
-        await _characterRepository.DeleteAsync(characterId);
+        await _characterService.DeleteCharacterAsync(characterId);
 
         return NoContent();
     }

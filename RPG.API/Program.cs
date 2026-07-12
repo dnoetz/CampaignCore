@@ -27,7 +27,7 @@ builder.Services.AddScoped<IAbilityProvider, AbilityProvider>();
 builder.Services.AddScoped<ActionLoggerService>();
 builder.Services.AddScoped<CampaignCodeService>();
 builder.Services.AddScoped<CampaignService>();
-builder.Services.AddScoped<CharacterCreationService>();
+builder.Services.AddScoped<CharacterService>();
 builder.Services.AddScoped<CombatService>();
 builder.Services.AddScoped<DamageCalculatorService>();
 builder.Services.AddScoped<DiceRollerService>();
