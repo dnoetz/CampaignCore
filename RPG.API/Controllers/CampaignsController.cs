@@ -1,9 +1,7 @@
-using Microsoft.AspNetCore.Http.HttpResults;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using RPG.API.DTOs.Campaign;
 using RPG.API.DTOs.Character;
-using RPG.API.DTOs.User;
-using RPG.Core.Entities;
 using RPG.Core.Interfaces.Repositories;
 using RPG.Core.Services;
 
@@ -33,22 +31,8 @@ public class CampaignsController : ControllerBase
         {
             return NotFound();
         }
-        
-        var characters = new List<CharacterSummaryDto>();
-        foreach (var character in campaign.Characters)
-        {
-            characters.Add(
-                new CharacterSummaryDto(character.Id, character.Name, character.PlayerClass, character.Level));
-        }
 
-        var user = new UserSummaryDto(campaign.Owner.Id, campaign.Owner.Username);
-
-        var campaignDto = new CampaignResponseDto(
-            campaign.Id,
-            campaign.Name,
-            campaign.CampaignCode,
-            characters,
-            user);
+        var campaignDto = campaign.Adapt<CampaignResponseDto>();
 
         return Ok(campaignDto);
     }
@@ -57,16 +41,8 @@ public class CampaignsController : ControllerBase
     public async Task<ActionResult<IEnumerable<CampaignSummaryDto>>> GetAllByUserIdAsync(int userId)
     {
         var campaignsByUserId = await _campaignRepository.GetAllByUserIdAsync(userId);
-        
-        var campaigns = new List<CampaignSummaryDto>();
 
-        foreach (var campaign in campaignsByUserId)
-        {
-            campaigns.Add(new CampaignSummaryDto(
-                campaign.Id,
-                campaign.Name,
-                campaign.CampaignCode));
-        }
+        var campaigns = campaignsByUserId.Adapt<List<CampaignSummaryDto>>();
 
         return Ok(campaigns);
     }
@@ -75,16 +51,12 @@ public class CampaignsController : ControllerBase
     public async Task<ActionResult<CampaignResponseDto>> CreateCampaign(CreateCampaignRequestDto campaignRequest, [FromQuery] int userId)
     {
         var owner = await _userRepository.GetByIdAsync(userId);
+        
         if (owner == null) return NotFound();
-
         
         var campaign = await _campaignService.CreateCampaign(campaignRequest.Name, owner);
 
-        var campaignResponse = new CampaignResponseDto(campaign.Id,
-            campaign.Name,
-            campaign.CampaignCode,
-            new List<CharacterSummaryDto>(),
-            new UserSummaryDto(campaign.Owner.Id, campaign.Owner.Username));
+        var campaignResponse = campaign.Adapt<CampaignResponseDto>();
 
         return CreatedAtAction(nameof(GetByUserId), new { userId = owner.Id, campaignId = campaign.Id }, campaignResponse);
     }

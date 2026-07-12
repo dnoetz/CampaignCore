@@ -1,3 +1,4 @@
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using RPG.API.DTOs.Character;
 using RPG.Core.Interfaces.Repositories;
@@ -11,11 +12,14 @@ public class CharactersController : ControllerBase
 {
     private readonly ICharacterRepository _characterRepository;
     private readonly CharacterService _characterService;
+    private readonly ExperienceService _experienceService;
 
-    public CharactersController(ICharacterRepository characterRepository, CharacterService characterService)
+    public CharactersController(ICharacterRepository characterRepository, CharacterService characterService,
+        ExperienceService experienceService)
     {
         _characterRepository = characterRepository;
         _characterService = characterService;
+        _experienceService = experienceService;
     }
 
     [HttpGet("{characterId}")]
@@ -24,11 +28,8 @@ public class CharactersController : ControllerBase
         var character = await _characterRepository.GetByIdAsync(characterId);
 
         if (character == null) return NotFound();
-        
-        var characterReponse = new CharacterResponseDto(character.Id, character.Name, character.Level, 
-            character.ExperienceToLevel, character.MaxHitpoints, character.CurrentHitpoints, character.Agility,
-            character.Intelligence, character.Strength, character.Vitality, character.Charisma, character.PlayerClass,
-            character.IsDead);
+
+        var characterReponse = character.Adapt<CharacterResponseDto>();
 
         return Ok(characterReponse);
     }
@@ -37,15 +38,18 @@ public class CharactersController : ControllerBase
     public async Task<ActionResult<IEnumerable<CharacterSummaryDto>>> GetAllCharsByUserIdAsync([FromQuery] int userId)
     {
         var characters = await _characterRepository.GetAllByUserAsync(userId);
-        
-        var charactersResponse = new List<CharacterSummaryDto>();
 
-        foreach (var character in characters)
-        {
-            charactersResponse.Add(new CharacterSummaryDto(character.Id, character.Name, character.PlayerClass, character.Level));
-        }
+        var charactersResponse = characters.Adapt<List<CharacterSummaryDto>>();
 
         return charactersResponse;
+    }
+
+    [HttpPut("levelup/{characterId}")]
+    public async Task<ActionResult> CharacterLevelUp(int characterId, CharacterLevelUpDto statUpgrades)
+    {
+        await _experienceService.IncreaseLevel(characterId, statUpgrades.Hp, statUpgrades.Agility,
+            statUpgrades.Intelligence, statUpgrades.Strength, statUpgrades.Vitality, statUpgrades.Charisma);
+        return Ok();
     }
     
     [HttpDelete("{characterId}")]

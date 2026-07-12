@@ -1,4 +1,5 @@
 using DotNetEnv.Configuration;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using RPG.Core.Entities;
 using RPG.Core.Entities.Characters.Necromancer;
@@ -35,7 +36,7 @@ builder.Services.AddScoped<ExperienceService>();
 
 builder.Services.AddKeyedScoped<ICombatAbility, AbilityNecrosis>(PlayableClasses.Necromancer);
 builder.Services.AddKeyedScoped<ICombatAbility, AbilityReapersMark>(PlayableClasses.Necromancer);
-
+builder.Services.AddMapster();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
