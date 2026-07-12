@@ -70,6 +70,7 @@ public class CampaignService
     public async Task DeleteCampaignAsync(int campaignId)
     {
         await _campaign.DeleteAsync(campaignId);
+        
         await _unitOfWork.CompleteAsync();
     }
 }

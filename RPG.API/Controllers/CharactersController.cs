@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RPG.API.DTOs.Character;
 using RPG.Core.Interfaces.Repositories;
@@ -6,6 +8,7 @@ using RPG.Core.Services;
 
 namespace RPG.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class CharactersController : ControllerBase
@@ -22,21 +25,35 @@ public class CharactersController : ControllerBase
         _experienceService = experienceService;
     }
 
-    [HttpGet("{characterId}")]
+    [HttpGet("get-character/{characterId}")]
     public async Task<ActionResult<CharacterResponseDto>> GetFullCharByIdAsync(int characterId)
     {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+        
         var character = await _characterRepository.GetByIdAsync(characterId);
 
-        if (character == null) return NotFound();
+        if (character == null || userId != character.Player.Id) return NotFound();
 
         var characterReponse = character.Adapt<CharacterResponseDto>();
 
         return Ok(characterReponse);
     }
 
-    [HttpGet("all-user-characters")]
-    public async Task<ActionResult<IEnumerable<CharacterSummaryDto>>> GetAllCharsByUserIdAsync([FromQuery] int userId)
+    [HttpGet("get-all-user-characters")]
+    public async Task<ActionResult<IEnumerable<CharacterSummaryDto>>> GetAllCharsByUserIdAsync()
     {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+        
         var characters = await _characterRepository.GetAllByUserAsync(userId);
 
         var charactersResponse = characters.Adapt<List<CharacterSummaryDto>>();
@@ -44,17 +61,39 @@ public class CharactersController : ControllerBase
         return charactersResponse;
     }
 
-    [HttpPut("levelup/{characterId}")]
+    [HttpPut("level-up/{characterId}")]
     public async Task<ActionResult> CharacterLevelUp(int characterId, CharacterLevelUpDto statUpgrades)
     {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+        
+        var character = await _characterRepository.GetByIdAsync(characterId);
+        
+        if (character == null || userId != character.Player.Id) return NotFound();
+        
         await _experienceService.IncreaseLevel(characterId, statUpgrades.Hp, statUpgrades.Agility,
             statUpgrades.Intelligence, statUpgrades.Strength, statUpgrades.Vitality, statUpgrades.Charisma);
         return Ok();
     }
     
-    [HttpDelete("{characterId}")]
+    [HttpDelete("delete-character/{characterId}")]
     public async Task<ActionResult> DeleteAsync(int characterId)
     {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+        
+        var character = await _characterRepository.GetByIdAsync(characterId);
+        
+        if (character == null || userId != character.Player.Id) return NotFound();
+        
         await _characterService.DeleteCharacterAsync(characterId);
 
         return NoContent();

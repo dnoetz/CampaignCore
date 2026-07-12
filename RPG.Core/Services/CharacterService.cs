@@ -54,6 +54,7 @@ public class CharacterService
     public async Task DeleteCharacterAsync(int characterId)
     {
         await _characterRepository.DeleteAsync(characterId);
+        
         await _unitOfWork.CompleteAsync();
     }
 }

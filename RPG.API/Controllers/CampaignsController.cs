@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RPG.API.DTOs.Campaign;
 using RPG.API.DTOs.Character;
@@ -7,6 +9,7 @@ using RPG.Core.Services;
 
 namespace RPG.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class CampaignsController : ControllerBase
@@ -22,9 +25,16 @@ public class CampaignsController : ControllerBase
         _userRepository = userRepository;
     }
     
-    [HttpGet("{userId}/{campaignId}")]
-    public async Task<ActionResult<CampaignResponseDto>> GetByUserId(int userId, int campaignId)
+    [HttpGet("get-campaign/{campaignId}")]
+    public async Task<ActionResult<CampaignResponseDto>> GetByUserId(int campaignId)
     {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+        
         var campaign = await _campaignRepository.GetByUserIdAsync(userId, campaignId);
 
         if (campaign == null)
@@ -37,9 +47,16 @@ public class CampaignsController : ControllerBase
         return Ok(campaignDto);
     }
 
-    [HttpGet("{userId}/all")]
-    public async Task<ActionResult<IEnumerable<CampaignSummaryDto>>> GetAllByUserIdAsync(int userId)
+    [HttpGet("all-campaigns")]
+    public async Task<ActionResult<IEnumerable<CampaignSummaryDto>>> GetAllByUserIdAsync()
     {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+        
         var campaignsByUserId = await _campaignRepository.GetAllByUserIdAsync(userId);
 
         var campaigns = campaignsByUserId.Adapt<List<CampaignSummaryDto>>();
@@ -48,8 +65,15 @@ public class CampaignsController : ControllerBase
     }
 
     [HttpPost("create-campaign")]
-    public async Task<ActionResult<CampaignResponseDto>> CreateCampaign(CreateCampaignRequestDto campaignRequest, [FromQuery] int userId)
+    public async Task<ActionResult<CampaignResponseDto>> CreateCampaign(CreateCampaignRequestDto campaignRequest)
     {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+        
         var owner = await _userRepository.GetByIdAsync(userId);
         
         if (owner == null) return NotFound();
@@ -62,9 +86,17 @@ public class CampaignsController : ControllerBase
     }
 
     [HttpPost("add-character-to-campaign")]
-    public async Task<ActionResult> AddCharacterToCampaignAsync(CreateCharacterRequestDto character, [FromQuery] int userId)
+    public async Task<ActionResult> AddCharacterToCampaignAsync(CreateCharacterRequestDto character)
     {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+        
         var user = await _userRepository.GetByIdAsync(userId);
+        
         if (user == null) return NotFound();
         
         await _campaignService.AddCharacterToCampaign(character.PlayerClass, character.Name, user,
@@ -73,9 +105,20 @@ public class CampaignsController : ControllerBase
         return Created();
     }
 
-    [HttpDelete("{campaignId}")]
+    [HttpDelete("delete-campaign/{campaignId}")]
     public async Task<ActionResult> DeleteCampaignAsync(int campaignId)
     {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+        
+        var campaign = await _campaignRepository.GetByUserIdAsync(userId, campaignId);
+
+        if (campaign == null) return NotFound();
+        
         await _campaignService.DeleteCampaignAsync(campaignId);
         
         return NoContent();
