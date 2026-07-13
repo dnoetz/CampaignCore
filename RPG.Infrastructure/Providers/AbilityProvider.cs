@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RPG.Core.Enums;
 using RPG.Core.Interfaces;
 
-namespace RPG.Infrastructure.Data;
+namespace RPG.Infrastructure.Providers;
 
 public class AbilityProvider : IAbilityProvider
 {
