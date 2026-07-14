@@ -28,7 +28,7 @@ public class CombatService
         _actionLogger = actionLogger;
     }
 
-    public async Task ExecuteCombatTurn(
+    public async Task<CampaignAction> ExecuteCombatTurn(
         Character player, 
         Monster enemy, 
         string abilityName, 
@@ -63,8 +63,10 @@ public class CombatService
             _exp.AwardExp(player, enemy);
         }
 
-        await _actionLogger.LogAction(narrative, player, ActionType.Combat, result);
+        var loggedAction = await _actionLogger.LogAction(narrative, player, ActionType.Combat, result);
         await _character.UpdateAsync(player);
         await _unitOfWork.CompleteAsync();
+
+        return loggedAction;
     }
 }

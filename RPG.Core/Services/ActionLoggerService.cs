@@ -14,7 +14,7 @@ public class ActionLoggerService
         _action = action;
     }
     
-    public async Task LogAction(
+    public async Task<CampaignAction> LogAction(
         string narrative,
         Character player,
         ActionType actionType,
@@ -32,5 +32,6 @@ public class ActionLoggerService
         };
 
         await _action.AddAsync(action);
+        return action;
     }
 }
