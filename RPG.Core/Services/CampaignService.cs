@@ -63,6 +63,9 @@ public class CampaignService
         string sharedCampaignCode)
     {
         var campaign = await _campaign.GetByCodeAsync(sharedCampaignCode);
+
+        if (campaign == null) throw new InvalidOperationException("Campaign Not found");
+        
         await _characterService.CreateCharacter(playerClass, name, campaign, user);
         await _unitOfWork.CompleteAsync();
     }

@@ -17,12 +17,15 @@ public class CampaignsController : ControllerBase
     private readonly CampaignService _campaignService;
     private readonly ICampaignRepository _campaignRepository;
     private readonly IUserRepository _userRepository;
+    private readonly ICharacterRepository _characterRepository;
 
-    public CampaignsController(CampaignService campaignService, ICampaignRepository campaignRepository, IUserRepository userRepository)
+    public CampaignsController(CampaignService campaignService, ICampaignRepository campaignRepository,
+        IUserRepository userRepository, ICharacterRepository characterRepository)
     {
         _campaignService = campaignService;
         _campaignRepository = campaignRepository;
         _userRepository = userRepository;
+        _characterRepository = characterRepository;
     }
     
     [HttpGet("get-campaign/{campaignId}")]
@@ -46,6 +49,32 @@ public class CampaignsController : ControllerBase
 
         return Ok(campaignDto);
     }
+    
+    [HttpGet("shared-campaign/{campaignCode}/{characterId}")]
+    public async Task<ActionResult<CampaignResponseDto>> GetSharedCampaign(string campaignCode, int characterId)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+        
+        var campaign = await _campaignRepository.GetByCodeAsync(campaignCode);
+        
+        var character = await _characterRepository.GetByIdAsync(characterId);
+
+        if (character == null || campaign == null) return NotFound();
+        
+        if (character.Campaign.Id != campaign.Id || character.Player.Id != userId)
+        {
+            return Unauthorized();
+        }
+
+        var campaignDto = campaign.Adapt<CampaignResponseDto>();
+
+        return Ok(campaignDto);
+    }
 
     [HttpGet("all-campaigns")]
     public async Task<ActionResult<IEnumerable<CampaignSummaryDto>>> GetAllByUserIdAsync()
@@ -63,9 +92,11 @@ public class CampaignsController : ControllerBase
 
         return Ok(campaigns);
     }
+    
+    
 
     [HttpPost("create-campaign")]
-    public async Task<ActionResult<CampaignResponseDto>> CreateCampaign(CreateCampaignRequestDto campaignRequest)
+    public async Task<ActionResult<CampaignResponseDto>> CreateCampaignAsync(CreateCampaignRequestDto campaignRequest)
     {
         var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
         
