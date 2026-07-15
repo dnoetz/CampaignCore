@@ -21,6 +21,7 @@ builder.Configuration.AddDotNetEnv(".env");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddMemoryCache();
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
@@ -29,6 +30,8 @@ builder.Services.AddScoped<ICampaignActionRepository, CampaignActionRepository>(
 builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 builder.Services.AddScoped<IAbilityProvider, AbilityProvider>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<ICacheProvider, CacheProvider>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ActionLoggerService>();
 builder.Services.AddScoped<CampaignCodeService>();
 builder.Services.AddScoped<CampaignService>();

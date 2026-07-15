@@ -1,10 +1,9 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using RPG.API.DTOs.Campaign;
 using RPG.API.DTOs.Combat;
-using RPG.Core.Entities.Monsters;
+using RPG.Core.Interfaces;
 using RPG.Core.Interfaces.Repositories;
 using RPG.Core.Services;
 
@@ -16,9 +15,9 @@ public class CombatController : ControllerBase
 {
     private readonly CombatService _combatService;
     private readonly ICharacterRepository _characterRepository;
-    private readonly IMemoryCache _cache;
+    private readonly ICacheProvider _cache;
 
-    public CombatController(CombatService combatService, ICharacterRepository characterRepository, IMemoryCache cache)
+    public CombatController(CombatService combatService, ICharacterRepository characterRepository, ICacheProvider cache)
     {
         _combatService = combatService;
         _characterRepository = characterRepository;
@@ -39,23 +38,13 @@ public class CombatController : ControllerBase
         {
             return Unauthorized();
         }
-        
-        var monster = _cache.Get(combatRequest.CampaignId);
 
-        if (monster == null)
-        {
-            var newMonster = new Goblin("Goblin");
-            monster = _cache.Set(combatRequest.CampaignId, newMonster,
-                new MemoryCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(30) });
-        }
+        var monster = _cache.GetOrCreateMonsterCache(combatRequest.CampaignId);
         
-        if (monster is not Monster monster1) return BadRequest();
-        
-        var combatAction = await _combatService.ExecuteCombatTurn(player, monster1, combatRequest.AbilityName,
+        var combatAction = await _combatService.ExecuteCombatTurn(player, monster, combatRequest.AbilityName,
             combatRequest.Initiative, combatRequest.Roll, combatRequest.Narrative);
 
-        _cache.Set(combatRequest.CampaignId, monster1,
-            new MemoryCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(30) });
+        _cache.SetMonsterCache(combatRequest.CampaignId, monster);
 
         var combatResponse = new CampaignActionResponseDto(combatAction.Result);
 
