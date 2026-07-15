@@ -17,7 +17,6 @@ public class Character
     public int Strength { get; protected set; }
     public int Vitality { get; protected set; }
     public int Charisma { get; protected set; }
-    public int MainStat { get; protected set; } 
     public bool IsDead { get; protected set; } = false;
     public PlayableClasses PlayerClass { get; set; }
     
@@ -46,8 +45,6 @@ public class Character
         Vitality = vitality;
         Charisma = charisma;
         PlayerClass = playerClass;
-        //revisit main stat functionality after complete character refactor
-        MainStat = 10;
     }
 
     public void TakeDamage(int damage)

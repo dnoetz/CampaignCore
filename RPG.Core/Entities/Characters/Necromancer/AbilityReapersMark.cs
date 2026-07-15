@@ -14,6 +14,6 @@ public class AbilityReapersMark : ICombatAbility
 
     public int Execute(Character player)
     {
-        return (BaseDamage * 2) + player.MainStat;
+        return (BaseDamage * 2) + player.Intelligence;
     }
 }

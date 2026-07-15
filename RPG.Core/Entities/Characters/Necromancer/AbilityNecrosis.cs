@@ -14,6 +14,6 @@ public class AbilityNecrosis : ICombatAbility
 
     public int Execute(Character player)
     {
-        return BaseDamage + player.MainStat;
+        return BaseDamage + player.Intelligence;
     }
 }
