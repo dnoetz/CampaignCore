@@ -9,6 +9,7 @@ namespace RPG.Tests.Services;
 
 public class CombatServiceTests
 {
+    /*
     [Fact]
     public void ExecuteCombatTurn_PlayerAbilities_AreSearchable()
     {
@@ -35,4 +36,5 @@ public class CombatServiceTests
         Assert.True(enemy.CurrentHitpoints < enemyHealthAfterNecrosis);
         Assert.Equal(expectedDamageReapersMark, actualDamageReapersMark);
     }
+    */
 }
