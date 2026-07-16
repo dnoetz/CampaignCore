@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\RPG.Core\RPG.Core.csproj" />
+      <ProjectReference Include="..\RPG.Infrastructure\RPG.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
