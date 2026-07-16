@@ -2,10 +2,11 @@ using RPG.Core.Entities.Campaigns;
 using RPG.Core.Entities.Characters;
 using RPG.Core.Enums;
 using RPG.Core.Interfaces.Repositories;
+using RPG.Core.Interfaces.Services;
 
 namespace RPG.Core.Services;
 
-public class ActionLoggerService
+public class ActionLoggerService : IActionLoggerService
 {
     private readonly ICampaignActionRepository _action;
 

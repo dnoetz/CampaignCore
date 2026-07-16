@@ -1,6 +1,6 @@
 using RPG.Core.Entities.Monsters;
 
-namespace RPG.Core.Interfaces;
+namespace RPG.Core.Interfaces.Providers;
 
 public interface ICacheProvider
 {

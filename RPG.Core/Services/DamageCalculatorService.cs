@@ -1,9 +1,10 @@
 using RPG.Core.Entities.Characters;
-using RPG.Core.Interfaces;
+using RPG.Core.Interfaces.Providers;
+using RPG.Core.Interfaces.Services;
 
 namespace RPG.Core.Services;
 
-public class DamageCalculatorService
+public class DamageCalculatorService : IDamageCalculatorService
 {
     private readonly IAbilityProvider _abilityProvider;
 
@@ -33,6 +34,4 @@ public class DamageCalculatorService
         }
         return ability.Execute(player) + (rollValue);
     }
-
-
 }

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using RPG.Core.Entities.Monsters;
 using RPG.Core.Interfaces;
+using RPG.Core.Interfaces.Providers;
 
 namespace RPG.Infrastructure.Providers;
 

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using RPG.Core.Services;
+using RPG.Core.Interfaces.Services;
 
 namespace RPG.API.Controllers;
 
@@ -7,9 +7,9 @@ namespace RPG.API.Controllers;
 [Route("api/[controller]")]
 public class DiceController : ControllerBase
 {
-    private readonly DiceRollerService _diceRoller;
+    private readonly IDiceRollerService _diceRoller;
 
-    public DiceController(DiceRollerService diceRoller)
+    public DiceController(IDiceRollerService diceRoller)
     {
         _diceRoller = diceRoller;
     }

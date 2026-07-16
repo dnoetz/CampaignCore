@@ -4,22 +4,23 @@ using RPG.Core.Entities.Monsters;
 using RPG.Core.Enums;
 using RPG.Core.Interfaces;
 using RPG.Core.Interfaces.Repositories;
+using RPG.Core.Interfaces.Services;
 
 namespace RPG.Core.Services;
 
-public class CombatService
+public class CombatService : ICombatService
 {
-    private readonly DamageCalculatorService _damage;
-    private readonly ExperienceService _exp;
+    private readonly IDamageCalculatorService _damage;
+    private readonly IExperienceService _exp;
     private readonly ICharacterRepository _character;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ActionLoggerService _actionLogger;
+    private readonly IActionLoggerService _actionLogger;
     public CombatService(
-        DamageCalculatorService damage,
-        ExperienceService exp,
+        IDamageCalculatorService damage,
+        IExperienceService exp,
         ICharacterRepository character,
         IUnitOfWork unitOfWork,
-        ActionLoggerService actionLogger)
+        IActionLoggerService actionLogger)
     {
         _damage = damage;
         _exp = exp;

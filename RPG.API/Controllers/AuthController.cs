@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RPG.API.DTOs.Auth;
-using RPG.Core.Interfaces;
-using RPG.Core.Services;
+using RPG.Core.Interfaces.Providers;
+using RPG.Core.Interfaces.Services;
 
 namespace RPG.API.Controllers;
 
@@ -11,9 +11,9 @@ public class AuthController : ControllerBase
 {
     private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenProvider _tokenProvider;
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
 
-    public AuthController(IPasswordHasher passwordHasher, ITokenProvider tokenProvider, UserService userService)
+    public AuthController(IPasswordHasher passwordHasher, ITokenProvider tokenProvider, IUserService userService)
     {
         _passwordHasher = passwordHasher;
         _tokenProvider = tokenProvider;

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RPG.API.DTOs.Character;
 using RPG.Core.Interfaces.Repositories;
+using RPG.Core.Interfaces.Services;
 using RPG.Core.Services;
 
 namespace RPG.API.Controllers;
@@ -14,8 +15,8 @@ namespace RPG.API.Controllers;
 public class CharactersController : ControllerBase
 {
     private readonly ICharacterRepository _characterRepository;
-    private readonly CharacterService _characterService;
-    private readonly ExperienceService _experienceService;
+    private readonly ICharacterService _characterService;
+    private readonly IExperienceService _experienceService;
 
     public CharactersController(ICharacterRepository characterRepository, CharacterService characterService,
         ExperienceService experienceService)

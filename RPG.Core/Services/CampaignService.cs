@@ -1,24 +1,24 @@
 using RPG.Core.Entities;
 using RPG.Core.Entities.Campaigns;
-using RPG.Core.Entities.Characters;
 using RPG.Core.Enums;
 using RPG.Core.Interfaces;
 using RPG.Core.Interfaces.Repositories;
+using RPG.Core.Interfaces.Services;
 
 namespace RPG.Core.Services;
 
-public class CampaignService
+public class CampaignService : ICampaignService
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly CharacterService _characterService;
+    private readonly ICharacterService _characterService;
     private readonly ICampaignRepository _campaign;
-    private readonly CampaignCodeService _campaignCode;
+    private readonly ICampaignCodeService _campaignCode;
 
     public CampaignService(
         IUnitOfWork unitOfWork,
-        CharacterService characterService,
+        ICharacterService characterService,
         ICampaignRepository campaign,
-        CampaignCodeService campaignCode)
+        ICampaignCodeService campaignCode)
     {
         _unitOfWork = unitOfWork;
         _characterService = characterService;

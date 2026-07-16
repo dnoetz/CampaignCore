@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using RPG.API.DTOs.User;
+using RPG.Core.Interfaces.Services;
 using RPG.Core.Services;
 
 namespace RPG.API.Controllers;
@@ -12,9 +13,9 @@ namespace RPG.API.Controllers;
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
 
-    public UsersController(UserService userService)
+    public UsersController(IUserService userService)
     {
         _userService = userService;
     }

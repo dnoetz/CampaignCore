@@ -1,10 +1,12 @@
 using RPG.Core.Entities;
 using RPG.Core.Interfaces;
+using RPG.Core.Interfaces.Providers;
 using RPG.Core.Interfaces.Repositories;
+using RPG.Core.Interfaces.Services;
 
 namespace RPG.Core.Services;
 
-public class UserService
+public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;

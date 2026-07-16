@@ -1,6 +1,6 @@
 using RPG.Core.Entities;
 
-namespace RPG.Core.Interfaces;
+namespace RPG.Core.Interfaces.Providers;
 
 public interface ITokenProvider
 {

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using RPG.Core.Enums;
 using RPG.Core.Interfaces;
+using RPG.Core.Interfaces.Providers;
 
 namespace RPG.Infrastructure.Providers;
 

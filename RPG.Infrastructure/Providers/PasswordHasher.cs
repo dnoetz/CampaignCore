@@ -1,4 +1,5 @@
 using RPG.Core.Interfaces;
+using RPG.Core.Interfaces.Providers;
 
 namespace RPG.Infrastructure.Providers;
 

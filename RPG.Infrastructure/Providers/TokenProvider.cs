@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using RPG.Core.Entities;
-using RPG.Core.Interfaces;
+using RPG.Core.Interfaces.Providers;
 
 namespace RPG.Infrastructure.Providers;
 

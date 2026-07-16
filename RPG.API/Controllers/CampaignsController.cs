@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using RPG.API.DTOs.Campaign;
 using RPG.API.DTOs.Character;
 using RPG.Core.Interfaces.Repositories;
-using RPG.Core.Services;
+using RPG.Core.Interfaces.Services;
 
 namespace RPG.API.Controllers;
 
@@ -14,12 +14,12 @@ namespace RPG.API.Controllers;
 [Route("api/[controller]")]
 public class CampaignsController : ControllerBase
 {
-    private readonly CampaignService _campaignService;
+    private readonly ICampaignService _campaignService;
     private readonly ICampaignRepository _campaignRepository;
     private readonly IUserRepository _userRepository;
     private readonly ICharacterRepository _characterRepository;
 
-    public CampaignsController(CampaignService campaignService, ICampaignRepository campaignRepository,
+    public CampaignsController(ICampaignService campaignService, ICampaignRepository campaignRepository,
         IUserRepository userRepository, ICharacterRepository characterRepository)
     {
         _campaignService = campaignService;

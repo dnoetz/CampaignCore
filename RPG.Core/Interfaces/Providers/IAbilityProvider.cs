@@ -1,6 +1,6 @@
 using RPG.Core.Enums;
 
-namespace RPG.Core.Interfaces;
+namespace RPG.Core.Interfaces.Providers;
 
 public interface IAbilityProvider
 {

@@ -1,11 +1,11 @@
-using RPG.Core.Interfaces;
+using RPG.Core.Interfaces.Services;
 
 namespace RPG.Core.Services;
 
-public class CampaignCodeService
+public class CampaignCodeService : ICampaignCodeService
 {
-    private const string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private const string symbols = "@#!$";
+    private const string Alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private const string Symbols = "@#!$";
     
     public string GenerateCode()
     {
@@ -15,11 +15,11 @@ public class CampaignCodeService
 
         for (int i = 0; i < 3; i++)
         {
-            letters[i] = alphabet[Random.Shared.Next(alphabet.Length)];
+            letters[i] = Alphabet[Random.Shared.Next(Alphabet.Length)];
         }
 
         string letterString = new string(letters);
 
-        return nums.ToString() + symbols[symbolSelect] + letterString;
+        return nums.ToString() + Symbols[symbolSelect] + letterString;
     }
 }

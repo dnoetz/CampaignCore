@@ -1,4 +1,4 @@
-namespace RPG.Core.Interfaces;
+namespace RPG.Core.Interfaces.Providers;
 
 public interface IPasswordHasher
 {

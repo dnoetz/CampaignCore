@@ -4,10 +4,11 @@ using RPG.Core.Entities.Characters;
 using RPG.Core.Enums;
 using RPG.Core.Interfaces;
 using RPG.Core.Interfaces.Repositories;
+using RPG.Core.Interfaces.Services;
 
 namespace RPG.Core.Services;
 
-public class CharacterService
+public class CharacterService : ICharacterService
 {
     private readonly ICharacterRepository _characterRepository;
     private readonly IUnitOfWork _unitOfWork;

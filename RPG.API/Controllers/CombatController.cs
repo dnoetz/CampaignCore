@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RPG.API.DTOs.Campaign;
 using RPG.API.DTOs.Combat;
-using RPG.Core.Interfaces;
+using RPG.Core.Interfaces.Providers;
 using RPG.Core.Interfaces.Repositories;
-using RPG.Core.Services;
+using RPG.Core.Interfaces.Services;
 
 namespace RPG.API.Controllers;
 
@@ -13,11 +13,11 @@ namespace RPG.API.Controllers;
 [Route("api/[controller]")]
 public class CombatController : ControllerBase
 {
-    private readonly CombatService _combatService;
+    private readonly ICombatService _combatService;
     private readonly ICharacterRepository _characterRepository;
     private readonly ICacheProvider _cache;
 
-    public CombatController(CombatService combatService, ICharacterRepository characterRepository, ICacheProvider cache)
+    public CombatController(ICombatService combatService, ICharacterRepository characterRepository, ICacheProvider cache)
     {
         _combatService = combatService;
         _characterRepository = characterRepository;
