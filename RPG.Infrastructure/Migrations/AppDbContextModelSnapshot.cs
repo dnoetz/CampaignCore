@@ -178,6 +178,12 @@ namespace RPG.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
                     b.ToTable("Users");
                 });
 
@@ -219,7 +225,7 @@ namespace RPG.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("RPG.Core.Entities.User", "Player")
-                        .WithMany()
+                        .WithMany("OwnedCharacters")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -239,6 +245,8 @@ namespace RPG.Infrastructure.Migrations
             modelBuilder.Entity("RPG.Core.Entities.User", b =>
                 {
                     b.Navigation("OwnedCampaigns");
+
+                    b.Navigation("OwnedCharacters");
                 });
 #pragma warning restore 612, 618
         }
