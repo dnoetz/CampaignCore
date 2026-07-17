@@ -14,4 +14,6 @@ public interface IUserService
     Task UpdateUserAsync(int userId, string username, string email);
 
     Task DeleteUserAsync(int userId);
+
+    Task EnsureEmailOrUsernameAvailable(string username, string email);
 }

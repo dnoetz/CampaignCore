@@ -1,4 +1,5 @@
 using RPG.Core.Entities.Campaigns;
+using RPG.Core.Entities.Characters;
 
 namespace RPG.Core.Entities;
 
@@ -12,6 +13,7 @@ public class User
     public string Email { get; set; }
     public DateTime Birthday { get; set; }
     public List<Campaign> OwnedCampaigns { get; set; }
+    public List<Character> OwnedCharacters { get; set; }
 
     public User(string username, string firstName, string lastName, string passwordHash, string email,
         DateTime birthday)

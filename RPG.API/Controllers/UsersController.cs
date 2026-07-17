@@ -23,8 +23,18 @@ public class UsersController : ControllerBase
     [HttpPost("register-user")]
     public async Task<ActionResult> RegisterUserAsync(CreateUserRequestDto newUser)
     {
+        try
+        {
+            await _userService.EnsureEmailOrUsernameAvailable(newUser.Username, newUser.Email);
+        }
+        catch (Exception e)
+        {
+            return Conflict(e.Message);
+        }
+        
         await _userService.CreateUser(newUser.Username, newUser.FirstName, newUser.LastName, newUser.Password,
             newUser.Email, newUser.Birthday);
+        
         return Created();
     }
 

@@ -65,4 +65,15 @@ public class UserService : IUserService
         
         await _unitOfWork.CompleteAsync();
     }
+
+    public async Task EnsureEmailOrUsernameAvailable(string username, string email)
+    {
+        var userByEmail = await _userRepository.GetByEmailAsync(email);
+
+        if (userByEmail != null) throw new InvalidOperationException("Email is taken!");
+
+        var userByUsername = await _userRepository.GetByUsernameAsync(username);
+
+        if (userByUsername != null) throw new InvalidOperationException("Username is taken");
+    }
 }

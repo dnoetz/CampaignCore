@@ -38,7 +38,7 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Character>()
             .HasOne(c => c.Player)
-            .WithMany()
+            .WithMany(u => u.OwnedCharacters)
             .HasForeignKey("PlayerId")
             .OnDelete(DeleteBehavior.Restrict);
 
@@ -47,6 +47,14 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey("ActorId")
             .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
+
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Username)
+            .IsUnique();
         
         base.OnModelCreating(modelBuilder);
     }
