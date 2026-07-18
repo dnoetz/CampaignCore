@@ -10,20 +10,21 @@ namespace RPG.Tests.Services;
 
 public class DamageCalculatorServiceTests
 {
+    private readonly Character _necro = new("Necro", 100, 1, 11, 1, 1, 1, PlayableClasses.Necromancer);
+    private readonly DamageCalculatorService _sut;
+    
+    public DamageCalculatorServiceTests()
+    {
+        var provider = new Mock<IAbilityProvider>();
+        provider.Setup(p => p.GetAbilitiesForClass(PlayableClasses.Necromancer))
+            .Returns(new List<ICombatAbility> { new AbilityNecrosis() });
+        _sut = new DamageCalculatorService(provider.Object);
+    }
+    
     [Fact]
     public void CalculateCriticalDamage_Necrosis_ReturnsCritical()
-    {
-        var mockAbilityProvider = new Mock<IAbilityProvider>();
-
-        var character = new Character("Necro", 100, 1, 11, 1, 1, 1, PlayableClasses.Necromancer);
-
-        mockAbilityProvider
-            .Setup(service => service.GetAbilitiesForClass(PlayableClasses.Necromancer))
-            .Returns( new List<ICombatAbility> { new AbilityNecrosis() });
-
-        var damageCalculatorService = new DamageCalculatorService(mockAbilityProvider.Object);
-
-        var damageDone = damageCalculatorService.CalculateCriticalDamage(character, "Necrosis");
+    { 
+        var damageDone = _sut.CalculateCriticalDamage(_necro, "Necrosis");
         
         Assert.Equal(39, damageDone);
     }
@@ -31,17 +32,7 @@ public class DamageCalculatorServiceTests
     [Fact]
     public void CalculateDamage_Necrosis_ReturnsNonCritical()
     {
-        var mockAbilityProvider = new Mock<IAbilityProvider>();
-
-        var character = new Character("Necro", 100, 1, 11, 1, 1, 1, PlayableClasses.Necromancer);
-
-        mockAbilityProvider
-            .Setup(service => service.GetAbilitiesForClass(PlayableClasses.Necromancer))
-            .Returns( new List<ICombatAbility> { new AbilityNecrosis() });
-
-        var damageCalculatorService = new DamageCalculatorService(mockAbilityProvider.Object);
-
-        var damageDone = damageCalculatorService.CalculateDamage(character, 4, "Necrosis");
+        var damageDone = _sut.CalculateDamage(_necro, 4, "Necrosis");
         
         Assert.Equal(30, damageDone);
     }
@@ -49,19 +40,9 @@ public class DamageCalculatorServiceTests
     [Fact]
     public void CalculateCriticalDamage_Foo_ThrowsException()
     {
-        var mockAbilityProvider = new Mock<IAbilityProvider>();
-
-        var character = new Character("Necro", 100, 1, 11, 1, 1, 1, PlayableClasses.Necromancer);
-
-        mockAbilityProvider
-            .Setup(service => service.GetAbilitiesForClass(PlayableClasses.Necromancer))
-            .Returns( new List<ICombatAbility> { new AbilityNecrosis() });
-
-        var damageCalculatorService = new DamageCalculatorService(mockAbilityProvider.Object);
-
         var exception =
             Assert.Throws<InvalidOperationException>(() =>
-                damageCalculatorService.CalculateCriticalDamage(character, "Foo"));
+                _sut.CalculateCriticalDamage(_necro, "Foo"));
 
         Assert.Contains("Ability not found!", exception.Message);
     }
@@ -69,19 +50,9 @@ public class DamageCalculatorServiceTests
     [Fact]
     public void CalculateDamage_Bar_ThrowsException()
     {
-        var mockAbilityProvider = new Mock<IAbilityProvider>();
-
-        var character = new Character("Necro", 100, 1, 11, 1, 1, 1, PlayableClasses.Necromancer);
-
-        mockAbilityProvider
-            .Setup(service => service.GetAbilitiesForClass(PlayableClasses.Necromancer))
-            .Returns( new List<ICombatAbility> { new AbilityNecrosis() });
-
-        var damageCalculatorService = new DamageCalculatorService(mockAbilityProvider.Object);
-
         var exception =
             Assert.Throws<InvalidOperationException>(() =>
-                damageCalculatorService.CalculateDamage(character, 4, "Bar"));
+                _sut.CalculateDamage(_necro, 4, "Bar"));
 
         Assert.Contains("Ability not found!", exception.Message);
     }
