@@ -28,6 +28,8 @@ public class ExperienceService : IExperienceService
     {
         var player = await _characterRepository.GetByIdAsync(playerId) ??
                      throw new InvalidOperationException("Cannot find character!");
+        if (player.ExperienceToLevel > 0) throw new InvalidOperationException("Not enough experience to level!");
+        
         player.LevelUp(hp, agility, intelligence, strength, vitality, charisma);
 
         await _unitOfWork.CompleteAsync();
