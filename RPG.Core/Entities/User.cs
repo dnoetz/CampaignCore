@@ -25,5 +25,6 @@ public class User
         Email = email;
         Birthday = birthday;
         OwnedCampaigns = [];
+        OwnedCharacters = [];
     }
 }
