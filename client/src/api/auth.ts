@@ -16,3 +16,11 @@ export async function register(username: string, firstName: string, lastName: st
     });
     if (!res.ok) throw new Error('Registration failed');
 }
+
+export function saveToken(token: string) {
+    localStorage.setItem('token', token);
+}
+
+export function getToken() {
+    return localStorage.getItem('token');
+}

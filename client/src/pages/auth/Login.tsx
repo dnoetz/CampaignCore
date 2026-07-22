@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router'
 import { ChangeEvent, useState, FormEvent } from 'react'
-import { login } from '../../api/auth.ts'
+import { login, saveToken } from '../../api/auth.ts'
 
 function Login() {
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ function Login() {
     const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const data = await login(formData.email, formData.password);
-        localStorage.setItem('token', data.token);
+        saveToken(data.token);
         navigate('/');
     };
     
