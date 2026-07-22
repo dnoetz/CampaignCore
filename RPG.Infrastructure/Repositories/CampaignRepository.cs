@@ -17,6 +17,8 @@ public class CampaignRepository : ICampaignRepository
     public async Task<Campaign?> GetByUserIdAsync(int userId, int campaignId)
     {
         return await _context.Campaigns
+            .Include(c => c.Owner)
+            .Include(c => c.Characters)
             .Where(c => c.Owner.Id == userId)
             .FirstOrDefaultAsync(c => c.Id == campaignId);
     }
@@ -24,6 +26,8 @@ public class CampaignRepository : ICampaignRepository
     public async Task<IEnumerable<Campaign>> GetAllByUserIdAsync(int userId)
     {
         return await _context.Campaigns
+            .Include(c => c.Owner)
+            .Include(c => c.Characters)
             .Where(c => c.Owner.Id == userId)
             .ToListAsync();
     }
