@@ -4,6 +4,7 @@ import Login from './pages/auth/Login.tsx'
 import Register from './pages/auth/Register.tsx'
 import CreateCampaign from './pages/campaign/CreateCampaign.tsx'
 import ViewCampaign from './pages/campaign/ViewCampaign.tsx'
+import ViewAllCampaigns from './pages/campaign/ViewAllCampaigns.tsx'
 
 const router = createBrowserRouter([
     {
@@ -11,20 +12,24 @@ const router = createBrowserRouter([
         element: <Home />
     },
     {
-        path: 'login',
+        path: 'user/login',
         element: <Login />
     },
     {
-        path: 'register',
+        path: 'user/register',
         element: <Register />
     },
     {
-        path: 'create-campaign',
+        path: 'campaign/create',
         element: <CreateCampaign />
     },
     {
-        path: `get-campaign/:id`,
+        path: `campaign/:id`,
         element: <ViewCampaign />
+    },
+    {
+        path: 'campaigns/all',
+        element: <ViewAllCampaigns />
     }
 ]);
 

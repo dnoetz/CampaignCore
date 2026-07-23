@@ -12,3 +12,9 @@ export async function getCampaign(id: number) {
         method: 'GET'
     })
 }
+
+export async function getAllCampaigns() {
+    return apiFetch('/api/campaigns/all-campaigns', {
+        method: 'GET'
+    })
+}
