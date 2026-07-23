@@ -25,7 +25,7 @@ function Login() {
         e.preventDefault();
         const data = await login(formData.email, formData.password);
         saveToken(data.token);
-        navigate('/');
+        navigate('/campaigns/all');
     };
     
     return (
@@ -41,7 +41,7 @@ function Login() {
                 <input name={"password"} placeholder={"abc123"} className={"border-black border-2 p-2 rounded-sm"} onChange={handleInputChange}/>
                 </div>
                 <button className={"border-black border-2 p-2 w-1/2 self-center rounded-lg mt-2 mb-2"} type={"submit"}>Login</button>
-                <p className={"self-center p-2"}>Don't have an account? <Link to={"/register"} className={"underline text-blue-500 hover:no-underline active:text-blue-800"}>Sign up</Link></p>
+                <p className={"self-center p-2"}>Don't have an account? <Link to={"/user/register"} className={"underline text-blue-500 hover:no-underline active:text-blue-800"}>Sign up</Link></p>
             </form>
         </div>
     )

@@ -41,7 +41,7 @@ function Register() {
         }
         try {
             await register(formData.username, formData.firstName, formData.lastName, formData.password, formData.email, new Date(formData.birthday));
-            navigate('/login');
+            navigate('/user/login');
         } catch {
             setError("Registration failed — that email or username may be taken");
         }
@@ -82,7 +82,7 @@ function Register() {
                     <input name={"confirmPassword"} placeholder={"abc123"} className={"border-black border-2 p-2 rounded-sm"} onChange={handleInputChange}/>
                 </div>
                 <button className={"border-black border-2 p-2 w-1/2 self-center rounded-lg mt-2 mb-2"} type={"submit"}>Create Account</button>
-                <p className={"self-center p-2"}>Already have an account? <Link to={"/login"} className={"underline text-blue-500 hover:no-underline active:text-blue-800"}>Sign in</Link></p>
+                <p className={"self-center p-2"}>Already have an account? <Link to={"/user/login"} className={"underline text-blue-500 hover:no-underline active:text-blue-800"}>Sign in</Link></p>
             </form>
         </div>
     )
