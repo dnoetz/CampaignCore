@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router'
+import type { Campaign } from '../types/campaign.ts'
 
-export default function CampaignSummaryCard(props) {
+export default function CampaignSummaryCard(props: {campaign: Campaign}) {
     const navigate = useNavigate();
     
     function handleNav() {

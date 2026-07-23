@@ -1,12 +1,8 @@
 import { useState, useEffect } from 'react'
 import { getAllCampaigns } from '../../api/campaign.ts'
 import CampaignSummaryCard from '../../components/CampaignSummaryCard.tsx'
+import type { Campaign } from '../../types/campaign.ts'
 function ViewAllCampaigns() {
-    interface Campaign {
-        id: number
-        name: string
-        campaignCode: string
-    }
 
     const [campaigns, setCampaigns] = useState<Campaign[]>([])
 

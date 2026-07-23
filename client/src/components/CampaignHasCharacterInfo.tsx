@@ -1,4 +1,4 @@
-import CharacterSummary from './CharacterSummary.tsx'
+import CharacterSummaryCard from './CharacterSummary.tsx'
 
 export function NoCharacterInfo(props) {
     return(
@@ -15,7 +15,7 @@ export function CharacterInfo(props) {
             <div className={"p-4"}>
                 {
                     props.characters.map(character => 
-                        <CharacterSummary character={character} key={character.id}/>
+                        <CharacterSummaryCard character={character} key={character.id}/>
                     )
                 }
             </div>

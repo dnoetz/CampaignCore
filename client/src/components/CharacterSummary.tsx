@@ -1,4 +1,6 @@
-export function CharacterSummary(props) {
+import type { CharacterSummary } from '../types/character.ts'
+
+export function CharacterSummaryCard(props: { character: CharacterSummary}) {
     return(
         <div className={"flex flex-row justify-between text-xl"}>
             <p>{props.character.name}</p>
@@ -10,4 +12,4 @@ export function CharacterSummary(props) {
     )
 }
 
-export default CharacterSummary
+export default CharacterSummaryCard
