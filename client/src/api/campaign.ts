@@ -18,3 +18,10 @@ export async function getAllCampaigns() {
         method: 'GET'
     })
 }
+
+export async function createCharacter(playerClass: string, name: string, campaignCode: string) {
+    return apiFetch('/api/campaigns/add-character-to-campaign', {
+        method: 'POST',
+        body: JSON.stringify({ playerClass, name, campaignCode }),
+    });
+}
