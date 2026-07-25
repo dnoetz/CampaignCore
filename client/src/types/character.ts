@@ -20,3 +20,9 @@ export interface CharacterInfo {
     playerClass: string;
     isDead: boolean;
 }
+
+export interface CreateCharacter {
+    playerClass: string;
+    name: string;
+    campaignCode: string;
+}
