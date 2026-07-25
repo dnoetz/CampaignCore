@@ -1,9 +1,10 @@
 import { Link, useNavigate } from 'react-router'
 import { ChangeEvent, useState, FormEvent } from 'react'
-import { login, saveToken } from '../../api/auth.ts'
+import { useAuth } from '../../context/AuthContext.tsx'
 
 function Login() {
     const navigate = useNavigate();
+    const { login } = useAuth();
     interface LoginData {
         email: string;
         password: string;
@@ -21,10 +22,11 @@ function Login() {
         });
     };
     
+    
+    
     const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const data = await login(formData.email, formData.password);
-        saveToken(data.token);
+        await login(formData.email, formData.password);
         navigate('/campaigns/all');
     };
     
