@@ -31,6 +31,15 @@ public class CampaignRepository : ICampaignRepository
             .Where(c => c.Owner.Id == userId)
             .ToListAsync();
     }
+
+    public async Task<Campaign?> GetPlayableCampaign(int campaignId)
+    {
+        return await _context.Campaigns
+            .Include(c => c.Owner)
+            .Include(c => c.Characters)
+            .Include(c => c.CampaignActions)
+            .FirstOrDefaultAsync(c => c.Id == campaignId);
+    }
     
     public async Task AddAsync(Campaign campaign)
     {

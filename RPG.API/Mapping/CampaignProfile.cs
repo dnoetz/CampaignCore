@@ -10,5 +10,6 @@ public class CampaignProfile : IRegister
     {
         config.NewConfig<Campaign, CampaignSummaryDto>();
         config.NewConfig<Campaign, CampaignResponseDto>();
+        config.NewConfig<Campaign, PlayableCampaignDto>();
     }
 }

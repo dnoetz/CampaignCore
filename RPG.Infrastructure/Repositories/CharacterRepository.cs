@@ -37,6 +37,12 @@ public class CharacterRepository : ICharacterRepository
             .Include(c => c.Player)
             .ToListAsync();
     }
+    
+    public async Task<bool> UserHasCharacterInCampaign(int userId, int campaignId)
+    {
+        return await _context.Characters
+            .AnyAsync(c => c.CampaignId == campaignId && c.Player.Id == userId);
+    }
 
     public async Task AddAsync(Character character)
     {

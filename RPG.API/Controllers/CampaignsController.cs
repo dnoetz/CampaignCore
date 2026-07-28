@@ -50,6 +50,35 @@ public class CampaignsController : ControllerBase
         return Ok(campaignDto);
     }
     
+    [HttpGet("play-campaign/{campaignId}")]
+    public async Task<ActionResult<PlayableCampaignDto>> GetByPlayableCampaign(int campaignId)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+
+        var userHasCharacterInCampaign = await _characterRepository.UserHasCharacterInCampaign(userId, campaignId);
+        
+        var campaign = await _campaignRepository.GetPlayableCampaign(campaignId);
+
+        if (campaign == null)
+        {
+            return NotFound();
+        }
+
+        if (!userHasCharacterInCampaign && campaign.Owner.Id != userId)
+        {
+            return Forbid();
+        }
+
+        var campaignDto = campaign.Adapt<PlayableCampaignDto>();
+
+        return Ok(campaignDto);
+    }
+    
     [HttpGet("shared-campaign/{campaignCode}/{characterId}")]
     public async Task<ActionResult<CampaignResponseDto>> GetSharedCampaign(string campaignCode, int characterId)
     {

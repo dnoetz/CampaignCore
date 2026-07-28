@@ -6,6 +6,7 @@ public interface ICampaignRepository
 {
     Task<Campaign?> GetByUserIdAsync(int userId, int campaignId);
     Task<IEnumerable<Campaign>> GetAllByUserIdAsync(int userId);
+    Task<Campaign?> GetPlayableCampaign(int campaignId);
     Task AddAsync(Campaign campaign);
     Task UpdateAsync(Campaign campaign);
     Task DeleteAsync(int id);
