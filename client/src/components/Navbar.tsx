@@ -9,7 +9,7 @@ export function Navbar() {
         navigate('/user/login');
     }
     return(
-        <div className={"border-b-1 border-black p-4 flex flex-row gap-2"}>
+        <div className={"border-b-1 border-black p-4 flex flex-row gap-2 h-6vh]"}>
             <Link to={"/"} className={"underline text-blue-500 hover:no-underline active:text-blue-800"}>Home</Link>
             {!isAuthenticated &&
                 <Link to={"/user/login"} className={"underline text-blue-500 hover:no-underline active:text-blue-800"}>Login</Link>}

@@ -13,3 +13,19 @@ export interface Campaign {
     name: string
     campaignCode: string
 }
+
+export interface CampaignAction {
+    id: number;
+    narrative: string;
+    actionType: string;
+    result: string;
+    timestamp: string;
+}
+
+export interface PlayableCampaignInfo {
+    id: number;
+    name: string;
+    campaignCode: string;
+    characters: Array<CharacterSummary>;
+    campaignActions: Array<CampaignAction>;
+}

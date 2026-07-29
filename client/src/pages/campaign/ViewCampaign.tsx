@@ -33,6 +33,10 @@ function ViewCampaign() {
         navigate('/campaigns/all')
     }
     
+    function handlePlayCampaign() {
+        navigate(`/campaign/play/${Number(id)}`)
+    }
+    
     return(
         <div className={"flex flex-col h-dvh justify-center p-4 gap-3"}>
             <div className={"flex flex-col p-4 border-black border-2 gap-2"}>
@@ -40,7 +44,10 @@ function ViewCampaign() {
                 <h2 className={"text-center text-2xl"}>Owner: {campaignInfo.owner?.username}</h2>
                 { campaignInfo.characters.length === 0 ? <NoCharacterInfo campaignCode={campaignInfo.campaignCode} /> : <CharacterInfo campaignCode={campaignInfo.campaignCode} characters={campaignInfo.characters}/>}
             </div>
-            <button className={"border-2 w-1/3 border-gray-900/50 rounded-md text-lg p-1 hover:bg-gray-200/50 hover:cursor-pointer active:bg-gray-400/25"} onClick={handleNav}>Back to all</button>
+            <div className={"flex flex-row justify-between"}>
+                <button className={"border-2 w-1/3 border-gray-900/50 rounded-md text-lg p-1 hover:bg-gray-200/50 hover:cursor-pointer active:bg-gray-400/25"} onClick={handleNav}>Back to all</button>
+                <button className={"border-2 w-1/3 border-gray-900/50 rounded-md text-lg p-1 hover:bg-gray-200/50 hover:cursor-pointer active:bg-gray-400/25"} onClick={handlePlayCampaign}>Play Campaign</button>
+            </div>
         </div>
         )
 }

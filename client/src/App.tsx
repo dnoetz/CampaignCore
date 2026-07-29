@@ -10,6 +10,7 @@ import { ProtectedRoute } from './api/ProtectedRoute.tsx'
 import { Navbar } from './components/Navbar.tsx'
 import Layout from './pages/Layout.tsx'
 import CreateCharacter from './pages/campaign/CreateCharacter.tsx'
+import PlayCampaign from './pages/campaign/PlayCampaign.tsx'
 
 const router = createBrowserRouter([
     {
@@ -24,7 +25,8 @@ const router = createBrowserRouter([
                     {path: 'campaign/create', element: <CreateCampaign/>},
                     {path: `campaign/:id`, element: <ViewCampaign/>},
                     {path: 'campaigns/all', element: <ViewAllCampaigns/>},
-                    {path: 'character/create', element: <CreateCharacter />}
+                    {path: 'character/create', element: <CreateCharacter />},
+                    {path: 'campaign/play/:id', element: <PlayCampaign />}
                 ],
             },
         ]
