@@ -74,7 +74,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(development =>
     {
-        development.WithOrigins("https://campaigncore-app-d0d6c2djh9dbeqby.canadacentral-01.azurewebsites.net")
+        development.WithOrigins("https://brave-pebble-07fd05f0f.7.azurestaticapps.net")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
