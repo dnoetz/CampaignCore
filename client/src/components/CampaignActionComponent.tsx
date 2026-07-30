@@ -1,4 +1,6 @@
-export default function CampaignAction(props) {
+import type { CampaignAction } from '../types/campaign.ts'
+
+export default function CampaignActionComponent(props: { campaignAction: CampaignAction }) {
     const dateObj = new Date(props.campaignAction.timestamp);
     const formattedDateTime = dateObj.toLocaleString();
     

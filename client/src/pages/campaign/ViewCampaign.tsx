@@ -9,10 +9,14 @@ function ViewCampaign() {
     const navigate = useNavigate();
     
     const [campaignInfo, setCampaignInfo] = useState<CampaignInfo>({
+        id: Number(id),
         name: '',
         campaignCode: '',
         characters: [],
-        owner: {}
+        owner: {
+            id: 0,
+            username: ''
+        }
     })
     
     useEffect(() => {

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router'
-import { ChangeEvent, useState, FormEvent } from 'react'
+import { useState } from 'react'
+import type { ChangeEvent, FormEvent } from 'react'
 import type { CreateCharacter } from '../../types/character.ts'
 import { createCharacter } from '../../api/campaign.ts'
 

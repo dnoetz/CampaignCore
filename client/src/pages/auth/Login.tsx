@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router'
-import { ChangeEvent, useState, FormEvent } from 'react'
+import { useState } from 'react'
+import type { ChangeEvent, FormEvent } from 'react'
 import { useAuth } from '../../context/AuthContext.tsx'
 
 function Login() {

@@ -1,16 +1,16 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
-import { useParams, useNavigate } from 'react-router'
+import { useState, useEffect } from 'react'
+import type { ChangeEvent, FormEvent } from 'react'
+import { useParams } from 'react-router'
 import type { PlayableCampaignInfo } from '../../types/campaign.ts'
 import type { CombatRequest } from '../../types/combat.ts'
 import { getPlayableCampaign, rollSix, rollTwenty, ExecuteTurn } from '../../api/campaign.ts'
-import CampaignAction from '../../components/CampaignAction.tsx'
-import Dice from '../../components/Dice.tsx'
+import CampaignActionComponent from '../../components/CampaignActionComponent.tsx'
 
 export default function PlayCampaign() {
     const { id } = useParams();
-    const navigate = useNavigate();
 
-    const [campaignInfo, setCampaignInfo] = useState<CampaignInfo>({
+    const [campaignInfo, setCampaignInfo] = useState<PlayableCampaignInfo>({
+        id: Number(id),
         name: '',
         campaignCode: '',
         characters: [],
@@ -29,6 +29,7 @@ export default function PlayCampaign() {
     async function loadCampaign() {
         const campaign = await getPlayableCampaign(Number(id));
         setCampaignInfo({
+            id: Number(id),
             name: campaign.name,
             campaignCode: campaign.campaignCode,
             characters: campaign.characters,
@@ -86,7 +87,7 @@ export default function PlayCampaign() {
             <div className={"border-2 border-black p-4 mt-4 flex flex-col gap-2 h-1/2"}>
                 <h3 className={"text-center text-2xl font-bold"}>Campaign Actions</h3>
                 <div className={"flex flex-col gap-2 overflow-scroll"}>
-                    {campaignInfo.campaignActions.map((action) => <CampaignAction key={action.id} campaignAction={action}/> )}
+                    {campaignInfo.campaignActions.map((action) => <CampaignActionComponent key={action.id} campaignAction={action}/> )}
                 </div>
             </div>
             <form className={"border-2 border-black h-2/5 flex flex-col gap-2"} onSubmit={SubmitCombatRequest}>

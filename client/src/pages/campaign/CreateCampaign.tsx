@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router'
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
+import type { ChangeEvent, FormEvent } from 'react'
 import { createCampaign } from '../../api/campaign.ts'
 
 function CreateCampaign() {
@@ -12,7 +13,7 @@ function CreateCampaign() {
 
     const handleCampaignCreate = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const data = await createCampaign(name);
+        await createCampaign(name);
         navigate('/');
     };
     

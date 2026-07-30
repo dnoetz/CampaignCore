@@ -1,6 +1,7 @@
 import CharacterSummaryCard from './CharacterSummary.tsx'
+import type { CharacterSummary } from '../types/character.ts'
 
-export function NoCharacterInfo(props) {
+export function NoCharacterInfo(props: { campaignCode: string }) {
     return(
         <div className={"p-4 flex flex-col gap-2"}>
             <p className={"text-xl"}>It doesn't look like there are any characters for this campaign! Invite some friends:</p>
@@ -9,7 +10,7 @@ export function NoCharacterInfo(props) {
     )
 }
 
-export function CharacterInfo(props) {
+export function CharacterInfo(props: { campaignCode: string, characters: CharacterSummary[] }) {
     return(
         <div>
             <div className={"p-4"}>

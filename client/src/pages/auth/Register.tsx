@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router'
-import { ChangeEvent, useState, FormEvent } from 'react'
+import { useState } from 'react'
+import type { ChangeEvent, FormEvent } from 'react'
 import { register } from '../../api/auth.ts'
 
 function Register() {
@@ -37,13 +38,14 @@ function Register() {
         e.preventDefault();
         if (formData.password != formData.confirmPassword) {
             setError("Passwords do not match!");
-            return;
+            return error;
         }
         try {
             await register(formData.username, formData.firstName, formData.lastName, formData.password, formData.email, new Date(formData.birthday));
             navigate('/user/login');
         } catch {
             setError("Registration failed — that email or username may be taken");
+            return error;
         }
     };
     
