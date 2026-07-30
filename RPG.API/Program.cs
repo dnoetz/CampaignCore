@@ -74,7 +74,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(development =>
     {
-        development.WithOrigins("http://localhost:5173")
+        development.WithOrigins("https://campaigncore-app-d0d6c2djh9dbeqby.canadacentral-01.azurewebsites.net")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
