@@ -16,6 +16,8 @@ export function Navbar() {
             {!isAuthenticated &&
                 <Link to={"/user/register"} className={"underline text-blue-500 hover:no-underline active:text-blue-800"}>Register</Link>}
             {isAuthenticated &&
+                <Link to={"/campaign/create"} className={"underline text-blue-500 hover:no-underline active:text-blue-800"}>Create a Campaign</Link>}
+            {isAuthenticated &&
                 <Link to={"/character/create"} className={"underline text-blue-500 hover:no-underline active:text-blue-800"}>Join A Campaign</Link>}
             {isAuthenticated &&
                 <Link to={"/campaigns/all"} className={"underline text-blue-500 hover:no-underline active:text-blue-800"}>All Campaigns</Link>}
