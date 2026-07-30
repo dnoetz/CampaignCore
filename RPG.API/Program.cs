@@ -18,15 +18,16 @@ using RPG.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddDotNetEnv(".env");
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddDotNetEnv(".env");
+}
 // Add services to the container.
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddMemoryCache();
-builder.Services.AddControllers();
-
 builder.Services.AddControllers()
     .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
