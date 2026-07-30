@@ -1,6 +1,6 @@
 import { getToken } from './auth.ts'
 
-const BASE_URL = 'http://localhost:5251';
+const BASE_URL = 'https://campaigncore-app-d0d6c2djh9dbeqby.canadacentral-01.azurewebsites.net';
 
 export async function apiFetch(path: string, options: RequestInit = {}) {
     const token = getToken();
